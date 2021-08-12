@@ -10,7 +10,6 @@ const MealItemForm = (props) => {
   const cartCtx = useContext(CartContext);
 
   useEffect(() => {
-    console.log("imworking");
     setAmountIsValid(true);
   }, [amountInputRef]);
 

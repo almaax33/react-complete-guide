@@ -21,7 +21,10 @@ const cartReducer = (state, action) => {
       updatedMeals = [...state.meals];
       updatedMeals[existingCartMealIndex] = updatedMeal;
     } else {
-      updatedMeals = [...state.meals, { ...action.meal, amount: action.amount }];
+      updatedMeals = [
+        ...state.meals,
+        { ...action.meal, amount: action.amount },
+      ];
     }
     return { meals: updatedMeals };
   }
@@ -40,6 +43,10 @@ const cartReducer = (state, action) => {
     }
     return { meals: updatedMeals };
   }
+
+  if (action.type === "CLEAR") {
+    return { meals: [] };
+  }
 };
 
 export const CartContextProvider = (props) => {
@@ -53,13 +60,16 @@ export const CartContextProvider = (props) => {
   const handlingRemoveMeal = (id) => {
     cartDispatch({ input: "REMOVE_MEAL", id: id });
   };
-
+  const clearCartHandler = () => {
+    cartDispatch({ input: "CLEAR" });
+  };
   return (
     <CartContext.Provider
       value={{
         meals: cartState.meals,
         addMeal: handlingAddMeal,
         removeMeal: handlingRemoveMeal,
+        clearCart: clearCartHandler,
       }}
     >
       {props.children}
